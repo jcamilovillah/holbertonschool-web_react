@@ -1,50 +1,49 @@
-interface Teacher {
-  readonly firstName: string;
-  readonly lastName: string;
-  fullTimeEmployee: boolean;
-  yearsOfExperience?: number;
-  location: string;
-  [propName: string]: any;
+interface Student {
+	firstName: string;
+	lastName: string;
+	age: number;
+	location: string,
 }
 
-interface Directors extends Teacher {
-  numberOfReports: number;
+const studentOne: Student = {
+	firstName: 'James',
+	lastName: 'Joyce',
+	age: 90,
+	location: 'Europe'
 }
 
-interface printTeacherFunction {
-  (firstName: string, lastName: string): string;
+const studentTwo: Student = {
+	firstName: 'Jordan',
+	lastName: 'Peterson',
+	age: 57,
+	location: 'Canada'
 }
 
-export const printTeacher: printTeacherFunction = function (
-  firstName: string,
-  lastName: string
-): string {
-  return `${firstName.charAt(0)}. ${lastName}`;
-};
+const studentsList: Array<Student> = [studentOne, studentTwo];
+const labels: string[] = ['firstName', 'location'];
 
-interface StudentConstructor {
-  new(firstName: string, lastName: string): StudentClassInterface;
+const table: HTMLTableElement = document.createElement('table');
+const tbody: HTMLTableSectionElement = document.createElement('tbody');
+const thead: HTMLTableSectionElement = document.createElement('thead');
+
+document.body.appendChild(table);
+table.appendChild(thead);
+table.appendChild(tbody);
+
+for (let i: number = 0; i < labels.length; i++) {
+	const th: HTMLTableCellElement = document.createElement('th');
+	th.appendChild(document.createTextNode(`${labels[i]}`));
+	thead.appendChild(th);
 }
 
-interface StudentClassInterface {
-  workOnHomework(): string;
-  displayName(): string;
-}
+for (let i :number = 0; i < studentsList.length; i++) {
+	const tr: HTMLTableRowElement = document.createElement('tr');
+	tbody.appendChild(tr);
+	const values: string[] = [studentsList[i].firstName, studentsList[i].location]
 
-export class StudentClass implements StudentClassInterface {
-  firstName: string;
-  lastName: string;
-
-  constructor(firstName: string, lastName: string) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
-
-  workOnHomework(): string {
-    return 'Currently working';
-  }
-
-  displayName(): string {
-    return this.firstName;
-  }
+	for (let j :number = 0; j < values.length; j++) {
+		const td: HTMLTableCellElement = document.createElement('td');
+		td.appendChild(document.createTextNode(`${values[j]}`));
+		tr.appendChild(td);
+	}
 }
